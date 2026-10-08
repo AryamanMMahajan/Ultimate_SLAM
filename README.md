@@ -10,12 +10,10 @@
 
 A ground-up **Simultaneous Localization and Mapping (SLAM)** project built in three stages on the
 [KITTI](https://www.cvlibs.net/datasets/kitti/) autonomous-driving dataset. Each stage implements one
-classical piece of a SLAM system **by hand** — front-end odometry, then a graph-optimization back-end —
+classical piece of a SLAM system: front-end odometry, then a graph-optimization back-end —
 and the final stage runs the industrial **RTAB-Map** library to do the entire stack online at once.
 
-Everything runs inside a single Docker image (`thinkautonomous/vslam-playground:humble`) on ROS 2 Humble,
-driven by `ros2 bag play` on recorded KITTI sequences. The goal is understanding: every component is
-implemented from scratch first, then benchmarked against the production system that does it all.
+Significance: Every autonomous system faces the same problem: to know where it is, it needs a map and to build a map, it needs to know where it is. SLAM (Simultaneous Localization and Mapping) solves both at once, estimating the vehicle/robot's trajectory while reconstructing the world around it from nothing but onboard sensors. The result is an end-to-end, sensor-to-map pipeline that spans both the fundamentals and the real tooling an autonomy team ships — classical geometry, modern learned features, graph optimization, and a production SLAM system — all reproducible inside a single Docker image on ROS 2.
 
 ---
 
