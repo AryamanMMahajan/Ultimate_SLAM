@@ -1,6 +1,6 @@
 # Ultimate SLAM
 
-> From raw KITTI sensor streams to a globally consistent 3D map — classical SLAM built by hand, then capped with production-grade RTAB-Map.
+> From raw KITTI sensor streams to a globally consistent 3D map: classical SLAM built by hand, then capped with production-grade RTAB-Map.
 
 ![SLAM Demo](assets/demo.gif)
 
@@ -10,10 +10,9 @@
 
 A ground-up **Simultaneous Localization and Mapping (SLAM)** project built in three stages on the
 [KITTI](https://www.cvlibs.net/datasets/kitti/) autonomous-driving dataset. Each stage implements one
-classical piece of a SLAM system: front-end odometry, then a graph-optimization back-end —
-and the final stage runs the industrial **RTAB-Map** library to do the entire stack online at once.
+classical piece of a SLAM system: front-end odometry, then a graph-optimization back-end and the final stage runs the industrial **RTAB-Map** library to do the entire stack online at once.
 
-Significance: Every autonomous system faces the same problem: to know where it is, it needs a map and to build a map, it needs to know where it is. SLAM (Simultaneous Localization and Mapping) solves both at once, estimating the vehicle/robot's trajectory while reconstructing the world around it from nothing but onboard sensors. The result is an end-to-end, sensor-to-map pipeline that spans both the fundamentals and the real tooling an autonomy team ships — classical geometry, modern learned features, graph optimization, and a production SLAM system — all reproducible inside a single Docker image on ROS 2.
+Significance: Every autonomous system faces the same problem: to know where it is, it needs a map and to build a map, it needs to know where it is. SLAM (Simultaneous Localization and Mapping) solves both at once, estimating the robot's trajectory while reconstructing the world around it from nothing but onboard sensors. The result is an end-to-end, sensor-to-map pipeline that spans both the fundamentals and the real deployment: classical geometry, modern learned features, graph optimization, and a production SLAM system, all reproducible inside a single Docker image on ROS 2.
 
 ---
 
@@ -39,22 +38,22 @@ flowchart LR
 
 The system is composed of three sequential stages:
 
-**1. Front-End Odometry** — `odometry/`
+**1. Front-End Odometry** : `odometry/`
 - Estimates relative frame-to-frame motion, two independent ways
 - **LiDAR:** point-to-plane ICP on point clouds (Open3D), chained into a dead-reckoned pose
 - **Visual:** SuperPoint → SuperGlue → (LiDAR-depth) → PnP for camera pose
-- No loop closure — drift accumulates by design, motivating Stage 2
+- No loop closure - drift accumulates by design, motivating Stage 2
 
-**2. Graph-SLAM Back-End** — `mapping/`
+**2. Graph-SLAM Back-End** : `mapping/`
 - Fuses camera + LiDAR observations into landmarks
 - Detects loop closures with a spatial-grid landmark store (**VisualHashMap**)
 - Optimizes a g2o pose graph with Levenberg–Marquardt → globally consistent trajectory
 
-**3. RTAB-Map Capstone** — `rtabmap/`
+**3. RTAB-Map Capstone** : `rtabmap/`
 - Feeds KITTI stereo to the production **RTAB-Map** SLAM system
 - Performs stereo visual odometry, **appearance-based loop closure** (bag-of-words),
-  pose-graph optimization, and dense 3D mapping — online and together
-- The production version of everything hand-built in Stages 1–2
+  pose-graph optimization, and dense 3D mapping online and together
+- The production version of everything hand-built in Stages 1-2
 
 ---
 
