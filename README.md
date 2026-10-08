@@ -2,7 +2,7 @@
 
 > From raw KITTI sensor streams to a globally consistent 3D map: classical SLAM built by hand, then capped with production-grade RTAB-Map.
 
-![SLAM Demo](assets/demo.gif)
+![SLAM Demo](assets/Screencastfrom2026-10-0813-32-05-ezgif.com-video-to-gif-converter.gif)
 
 ---
 
